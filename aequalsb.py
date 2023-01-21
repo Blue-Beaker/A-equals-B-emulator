@@ -15,6 +15,7 @@ class AeqB:
     lines:list[str]
     printProgramLine=True
     printProgress=True
+    __completed=False
     def __init__(self,programFile):
         with open(programFile,mode="r") as program:
             self.lines = program.readlines()
@@ -23,7 +24,6 @@ class AeqB:
     def step(self,string:str):
             for i in range(self.lines.__len__()):
                 if i not in self.disabledlines:
-                    #line=self.lines[i].removesuffix("\n").replace(" ","")
                     line=self.lines[i]
                     if line.__len__()>0 and not (line.isspace() or line.startswith("#")):
                         string2=self.parse(i,line,string)
@@ -56,7 +56,8 @@ class AeqB:
         elif tostr.startswith("(return)"):
             key1=0
             tostr=tostr[8:]
-            return self.replace(input,fromstr,tostr,key0,key1)
+            self.__completed=True
+            return tostr
 
         if fromstr.startswith("(once)"):
             fromstr=fromstr[6:]
@@ -76,11 +77,11 @@ class AeqB:
                     string=replacewith+string.removeprefix(match)
         elif key0==-1:
             match=match
-            if string.startswith(match):
+            if string.endswith(match):
                 if key1==1:
-                    string=replacewith+string.removeprefix(match)
+                    string=replacewith+string.removesuffix(match)
                 else:
-                    string=string.removeprefix(match)+replacewith
+                    string=string.removesuffix(match)+replacewith
         else:
             if string.find(match)>=0:
                 if key1==-1:
@@ -94,21 +95,23 @@ class AeqB:
     def getResult(self,input):
         self.disabledlines=[]
         lastinput=input
-        while(1):
+        while(not self.__completed):
             input=self.step(input)
             if lastinput==input:
                 return input
             if self.printProgress:
                 print(input)
             lastinput=input
+        return(input)
 
 if __name__=="__main__":
-    if sys.argv.__len__()<3:
-        print("Usage: aequalsb.py [program]")
-        programFile="multiply.aeqb"
-        input="abc"
+    if sys.argv.__len__()<2:
+        programFile="demo.aeqb"
     else:
         programFile=sys.argv[1]
+    if sys.argv.__len__()<3:
+        input=""
+    else:
         input=sys.argv[2]
     output=AeqB(programFile).getResult(input)
     print(input,output)

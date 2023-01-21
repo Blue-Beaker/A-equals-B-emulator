@@ -1,0 +1,27 @@
+(once)=(end){
+(once)=(start)|
+#bin to length
+|{=|
+C{={C
+0{={{0
+1{={{C1
+1C=C1
+0C=C0
+#length to bin
+(start)[=1
+1[=[0
+0[=1
+|C=[|
+#multiplex
+*C={*
+#clean
+*{=*
+
+
+|1=|
+|0=|
+|*=|
+|=
+
+(once)=(start)0
+(start)01=1
