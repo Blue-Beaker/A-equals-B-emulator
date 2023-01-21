@@ -12,13 +12,16 @@ def genInput():                 #Function to generate random input and answer pa
     return input,answer
 
 aeqb=aequalsb.AeqB(file)
-aeqb.printProgramLine=False
-aeqb.printProgress=False
 
 for i in range(count):
     input,answer=genInput()
+    aeqb.printProgramLine=False
+    aeqb.printProgress=False
     result=aeqb.getResult(input)
     if result==answer:
         print(f"\033[0;37;42m{input},{result}\033[0m {answer}")
     else:
+        aeqb.printProgramLine=True  #Print every move on failure
+        aeqb.printProgress=True     #Print every move on failure
+        result=aeqb.getResult(input)
         print(f"\033[0;37;41m{input},{result}\033[0m {answer}")
