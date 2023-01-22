@@ -7,8 +7,8 @@ count=1024                      #Test count
 def genInput():                 #Function to generate random input and answer pair
     a=random.getrandbits(4)
     b=random.getrandbits(4)
-    input=f"{bin(a)[2:]}*{bin(b)[2:]}"
-    answer=bin(a*b)[2:]
+    input=f"{bin(a)[2:]}*{bin(b)[2:]}"  #Generate input
+    answer=bin(a*b)[2:]                 #Generate answer
     return input,answer
 
 aeqb=aequalsb.AeqB(file)
